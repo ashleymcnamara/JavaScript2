@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+
+
+     <h1>Sorting Hat</h1>
+        <!-- All of the HTML, ooooooh fancy! -->
+        <div class="container">
+            <div class="form">
+                <input type="number" id="student_count">  
+                    <button id="set_student_count">Set Student Count
+                </button>  
+                    <button id="student_count_reset">reset
+                </button>
+                    <p>Total:<span id="count">0</span>
+                 </p>
+                    
+                    <input type="text" id="student">  
+                    <button id="student_sort">Sort
+                </button>  
+                    <button id="student_name_reset">reset
+                </button>
+                    <p>Total:<span id="student_house">0</span>
+                </p>
+
+        <div id="house_1" class="house col-md-2">
+            Gryffindor<br/>
+        </div>
+            <div id="house_2" class="house col-md-2">
+                Hufflepuff<br/>
+            </div>
+                <div id="house_3" class="house col-md-2">
+                    Ravenclaw<br/>
+                </div>
+                    <div id="house_4" class="house col-md-2">
+                        Slytherin<br/>
+                    </div>
+                        <div id="house_5" class="house col-md-2">
+                            Dumbledore's Army<br/>
+                        </div>
+        </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+         <script type="text/javascript">
+            // variable count set to 0
+            var count = 0;
+            // variable button pointed to HTML above 
+            var button = document.getElementById("set_student_count");
+            // event listener set to mouse click 
+            button.addEventListener('click', function(){
+            
+                // get the value of the of student count
+                count = document.getElementById("student_count").value;
+                document.getElementById("count").innerHTML=count;
+            });
+            // new variable for the reset button
+            var button_two = document.getElementById("student_count_reset");
+            button_two.addEventListener('click', function(){
+            
+                    
+                count = 0;
+                document.getElementById("count").innerHTML=count;
+                document.getElementById("student_count").value = count;
+            });
+            // an array of houses for refrence
+            var houses = {
+                "house_1":0,
+                "house_2":0,
+                "house_3":0,
+                "house_4":0,
+                "house_5":0
+            }
+            
+            // variable button_three is sorting!
+            var button_three = document.getElementById("student_sort");
+            button_three.addEventListener('click', function(){
+                // printing output
+                console.log(count/Object.keys(houses).length);
+                // variable max is finding the length of the houses variable.
+                var max = Math.floor(count/Object.keys(houses).length);
+                var chosen = false;
+                // hey you can't go past 1000
+                var threshold = 1000;
+                // while chosen doesn't equal true and threshold is greater than or equal to 0
+                while (chosen != true && threshold >= 0){
+                    var random_house = get_random_house();
+                    var random_house_count = houses[random_house];
+                   // if the number of houses is is less than the length of the array
+                    if (random_house_count < max){
+                        // then incrrment 
+                        houses[random_house]++;
+                        // this stops the while-loop from going on forever
+                        chosen = true;
+                        // put the student name into random house
+                        var name = document.getElementById("student").value;
+                        append_student(random_house, name);
+                        
+                    
+                    }
+                    threshold--;
+                }
+                // if the threshold is met then send an alert to the user
+                if(threshold < 0){
+                    alert("We are all full!");
+                }
+            
+            });
+            
+            // new function to get random house
+            function get_random_house(){
+                // variable keys is getting the keys from the array
+                var keys = Object.keys(houses);
+                // variable house is getting the length of the key list
+                var house = Math.floor(Math.random()*keys.length);
+                // returns key list for house
+                return keys[house];
+            }
+
+            // new function append_student
+            function append_student(house, name){
+                // get the element in the HTML
+                var the_house = document.getElementById(house);
+                // add name to random house
+                the_house.innerHTML += name+"<br/>";
+                
+
+            }
+
+                 
+   
+
+     </script>
+
+  </body>
+</html>
